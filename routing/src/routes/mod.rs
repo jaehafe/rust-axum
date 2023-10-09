@@ -6,11 +6,13 @@ mod query_params;
 mod mirror_user_agent;
 mod mirror_custom_header;
 mod middleware_message;
+mod read_middleware_custom_header;
+mod set_middleware_custom_header;
 
 use axum::{
   Router,
   routing::{get, post, patch},
-  body::Body, http::Method, Extension
+  body::Body, http::Method, Extension, middleware
 };
 use tower_http::cors::{Any, CorsLayer};
 
@@ -22,6 +24,10 @@ use query_params::query_params;
 use mirror_user_agent::mirror_user_agent;
 use mirror_custom_header::mirror_custom_header;
 use middleware_message::middleware_message;
+use read_middleware_custom_header::read_middleware_custom_header;
+
+use self::set_middleware_custom_header::set_middleware_custom_header;
+
 
 #[derive(Clone)]
 pub struct SharedData {
@@ -37,6 +43,8 @@ pub fn create_routes() -> Router {
   let shared_data = SharedData {message: "hello from shared data".to_owned()};
 
   Router::new()
+    .route("/read_middleware_custom_header", get(read_middleware_custom_header))
+    .route_layer(middleware::from_fn(set_middleware_custom_header))
     .route("/", get(hello_world))
     .route("/mirror_body_string", post(mirror_body_string))
     .route("/mirror_body_json", post(mirror_body_json))
