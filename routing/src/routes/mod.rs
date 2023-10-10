@@ -10,6 +10,7 @@ mod read_middleware_custom_header;
 mod set_middleware_custom_header;
 mod always_errors;
 mod returns_201;
+mod get_json;
 
 use axum::{
   Router,
