@@ -6,9 +6,16 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+axum = { version = "0.6.20", features = ["headers", "macros"] }
+bcrypt = "0.15.0"
 cargo-watch = "8.4.1"
+chrono = { version = "0.4.31", features = ["serde"] }
 dotenvy = "0.15.7"
 dotenvy_macro = "0.15.7"
+jsonwebtoken = "8.3.0"
 sea-orm = { version = "0.12.3", features = ["sqlx-postgres", "runtime-tokio-rustls"] }
 sea-orm-cli = "0.12.3"
+serde = { version = "1.0.188", features = ["derive"] }
+serde_with = "3.3.0"
 tokio = { version = "1.33.0", features = ["full"] }
+validator = { version = "0.16.1", features = ["derive"] }
